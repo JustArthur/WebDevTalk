@@ -14,6 +14,20 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+-- Listage de la structure de la base pour webdevtalk
+CREATE DATABASE IF NOT EXISTS `webdevtalk` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `webdevtalk`;
+
+-- Listage de la structure de table webdevtalk. categories
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Listage des données de la table webdevtalk.categories : ~5 rows (environ)
 INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
 	(1, 'Eos id.', '2023-03-23 12:15:02', '2023-03-23 12:15:02'),
@@ -22,7 +36,28 @@ INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
 	(4, 'Ea dolorem.', '2023-03-23 12:15:02', '2023-03-23 12:15:02'),
 	(5, 'Maiores tempore.', '2023-03-23 12:15:02', '2023-03-23 12:15:02');
 
+-- Listage de la structure de table webdevtalk. failed_jobs
+CREATE TABLE IF NOT EXISTS `failed_jobs` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Listage des données de la table webdevtalk.failed_jobs : ~0 rows (environ)
+
+-- Listage de la structure de table webdevtalk. migrations
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table webdevtalk.migrations : ~0 rows (environ)
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -33,9 +68,47 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(21, '2023_03_23_123111_create_posts_table', 1),
 	(22, '2023_03_23_123136_create_categories_table', 1);
 
+-- Listage de la structure de table webdevtalk. password_reset_tokens
+CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Listage des données de la table webdevtalk.password_reset_tokens : ~0 rows (environ)
 
+-- Listage de la structure de table webdevtalk. personal_access_tokens
+CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Listage des données de la table webdevtalk.personal_access_tokens : ~0 rows (environ)
+
+-- Listage de la structure de table webdevtalk. posts
+CREATE TABLE IF NOT EXISTS `posts` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `user_id` bigint unsigned NOT NULL,
+  `category_id` bigint unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table webdevtalk.posts : ~18 rows (environ)
 INSERT INTO `posts` (`id`, `title`, `content`, `image`, `created_at`, `updated_at`, `user_id`, `category_id`) VALUES
@@ -57,6 +130,20 @@ INSERT INTO `posts` (`id`, `title`, `content`, `image`, `created_at`, `updated_a
 	(16, 'Corporis dolores et voluptatum porro nemo.', 'Dicta vel sunt et pariatur voluptatem. Impedit accusamus aut veniam autem nemo voluptas illum sint. Quia magni ut debitis veritatis quia blanditiis atque. Non molestias porro quam. Excepturi cumque perspiciatis voluptas.', 'https://placehold.co/1000', '2023-03-23 12:15:02', '2023-03-23 12:15:02', 9, 3),
 	(17, 'Laudantium neque veniam beatae beatae saepe hic cumque.', 'Consequatur suscipit aut ipsa quia voluptatem. Enim similique amet deleniti doloremque quidem molestias. Aut fuga aut aut hic aut reprehenderit. Rerum est blanditiis ducimus quaerat laborum quod. Id dolorem distinctio dolorem quibusdam ut non in.', 'https://placehold.co/1000', '2023-03-23 12:15:02', '2023-03-23 12:15:02', 10, 5),
 	(18, 'Reiciendis qui rem eius.', 'Ullam eos doloremque veritatis minima. Vero modi natus natus provident. Consequatur veniam eius nulla quo fuga eos. Repudiandae unde adipisci numquam est sed ab eaque. Et vitae pariatur in et et et voluptas.', 'https://placehold.co/1000', '2023-03-23 12:15:02', '2023-03-23 12:15:02', 10, 5);
+
+-- Listage de la structure de table webdevtalk. users
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table webdevtalk.users : ~0 rows (environ)
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
